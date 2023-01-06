@@ -1,2 +1,0 @@
-This	line	contains	tabs.
-This line does contain tabs.
