@@ -1,0 +1,24 @@
+scp -P36000 dts_packages.zip root@10.249.0.1:/data/
+
+unzip -d /temp test.zip
+
+yum search xorg-x11-apps
+yum install -y xorg-x11-apps.x86_64
+yum whatprovides "*xhost"
+yum install -y  xorg-x11-server-utils-7.7-20.el7.x86_64
+yum -y install xorg-x11-xauth
+
+systemctl  restart  sshd.service  # 重启ssh
+
+# 用户组与用户的概念：
+groupadd -g 1001 oinstall  # 创建一个用户组，并指定组id为1001
+groupadd -g 1200 dba
+useradd -u 1101 -g oinstall -G dba -d /home/oracle oracle  # 只有-g生效了,默认的用户组，而-G遇到-g便不生效了
+chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_ma  # oracle.oinstall也是可以的，前面是用户，后面是用户组
+chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_sm
+chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_deploy
+
+dd if=/dev/zero of=/home/swapfile bs=1M count=512  # 使用dd命令在/home下创建一个名为swapfile的文件，大小为512MB
+mkswap /home/swapfile  # 使用 mkswap 命令将此文件作为交换文件
+swapon /home/swapfile  # 启用新创建的交换文件
+
