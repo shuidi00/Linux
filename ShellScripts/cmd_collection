@@ -13,7 +13,9 @@ systemctl  restart  sshd.service  # 重启ssh
 # 用户组与用户的概念：
 groupadd -g 1001 oinstall  # 创建一个用户组，并指定组id为1001
 groupadd -g 1200 dba
-useradd -u 1101 -g oinstall -G dba -d /home/oracle oracle  # 只有-g生效了,默认的用户组，而-G遇到-g便不生效了
+useradd -u 1101 -g oinstall -G dba -d /home/oracle oracle  # -g: 指定用户登陆组的GID或组名；
+#  -G: 指定用户除登陆组之外所属的一个或多个附加组 -d:为主目录指定一个名字，如果不想用登录名作为主目录名的话
+#  -u: 为用户指定唯一的UID
 chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_ma  # oracle.oinstall也是可以的，前面是用户，后面是用户组
 chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_sm
 chown oracle:oinstall /oracle/app/ogg/db19.3/ogg191_deploy
