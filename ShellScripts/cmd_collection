@@ -24,3 +24,38 @@ dd if=/dev/zero of=/home/swapfile bs=1M count=512  # 使用dd命令在/home下�
 mkswap /home/swapfile  # 使用 mkswap 命令将此文件作为交换文件
 swapon /home/swapfile  # 启用新创建的交换文件
 
+echo "This is a test" | sed 's/test/big test/'
+sed 's/dog/cat/' demo.txt
+sed -e 's/blue/red/; s/dog/cat/' demo.txt  # 要执行多个命令，使用-e选项
+sed -f blue.sed demo.txt  # -f 指定文件
+sed -n 's/blue/123/p' demo.txt  # -n会禁止sed编辑器的输出
+sed -n '/3/p' demo.txt  # 打印包含匹配文本的行
+sed -n '2,3p' demo.txt  # 打印第2,3行的数据
+sed 's/blue/red/w new2.txt' demo.txt
+sed '1,2w 2line.txt' demo.txt  # 特定行写入新文件
+sed 's!/bin/bash!/bin/csh!' /etc/passwd  # 分隔符不一定非得是/
+sed  '5,$s/blue/red/' demo.txt  # 指定范围，每一行都会输出出来，要么是原来的，要么是替换后的
+sed '/qiqi/s/bash/csh/' /etc/passwd  # 只匹配存在qiqi关键字的文本
+sed '2,$d' demo.txtsed '2,$d' demo.txt
+sed '/number 1/d' demo.txt  # 删除含number 1的行
+sed '/2/,/3/d' demo.txtsed '/2/,/3/d' demo.txt  # 搜到有2的行开始删除，搜到有3的行结束删除,后续再遇到2的时候继续开始删除
+echo "Test line 2" | sed 'i\Test line 1'  # 插入到前面
+echo "Test line 2" | sed 'a\Test line 1'  # 插入到后面
+sed '3i\new line' demo.txt   # 插入到文件的第3行前
+sed '$a\end line' demo.txt  # 插入到文件的末尾
+sed '3c\changed line' demo.txt  # 修改第3行的内容
+sed '2,3c\changed line' demo.txt  # 会将第2，3行的内容都替换掉
+sed '/3/c\changed line' demo.txt  # 修改第3行的内容
+echo 'This 1 is a test of 1 try.' | sed 'y/123/456/'  # 单个字符替换，1->4, 2->5, 3->6
+sed '=' demo.txt  # 打印行号
+sed -n 'l' demo.txt  # 打印数据流中的文本和不可打印的ASCII字符
+sed '3r 2line.txt' demo.txt  # 于demo.txt的第3行后，插入2line.txt的内容
+sed '/2a/r 2line.txt' demo.txt  # 在demo.txt中找到2a后，在这一行的后面，插入2line.txt的内容
+
+
+
+gawk '{print $1}' demo.txt  # gawk默认的字段分隔符为任意的空白字符
+gawk -F: '{print $1}' demo.txt  # 可以用-F选项指定字段分割符
+echo "My name is rich" | gawk '{$4="xx"; print $0}'echo "My name is rich" | gawk '{$4="xx"; print $0}'  # 多个命令间用分号间隔
+gawk -F: -f home.gawk /etc/passwdgawk -F: -f home.gawk /etc/passwd  # home.gawk 文件中的内容为：{print $1 "'s home directory is " $6}
+gawk 'BEGIN {print "Hello World"}'  # BEGIN关键字后指定的脚本会在读取数据前执行
