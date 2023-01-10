@@ -59,3 +59,7 @@ gawk -F: '{print $1}' demo.txt  # 可以用-F选项指定字段分割符
 echo "My name is rich" | gawk '{$4="xx"; print $0}'echo "My name is rich" | gawk '{$4="xx"; print $0}'  # 多个命令间用分号间隔
 gawk -F: -f home.gawk /etc/passwdgawk -F: -f home.gawk /etc/passwd  # home.gawk 文件中的内容为：{print $1 "'s home directory is " $6}
 gawk 'BEGIN {print "Hello World"}'  # BEGIN关键字后指定的脚本会在读取数据前执行
+
+netstat -tunlp | grep 7809  #查看端口使用情况
+
+grep -r '$#' *  # 全局搜索
