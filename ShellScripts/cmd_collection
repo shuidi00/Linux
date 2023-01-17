@@ -63,3 +63,57 @@ gawk 'BEGIN {print "Hello World"}'  # BEGIN关键字后指定的脚本会在读�
 netstat -tunlp | grep 7809  #查看端口使用情况
 
 grep -r '$#' *  # 全局搜索
+
+#vim
+:%s/Linux/linux/g  # 全部替换
+u  # Undo 已经做了某些改动，回退回去
+ctrl + r # redo  回退多了,再做一次
+
+chmod +x oggOneButtonInstall.sh  # 脚本增加可执行权限
+
+uname -a  # 检查内核版本信息
+
+docker run -it ubuntu /bin/bash  # 使用docker run命令创建容器 -i标志保证容器中STDIN是开启的，交互式shell依赖于持久的标准输入 -t标志告诉docker为要创建的容器分配一个伪tty终端 exit后，容器会随之停止运行 做的改动重新进入时也会消失
+docker run --name ubuntu2023 -it ubuntu /bin/bash  # 创建容器时指定容器名称, 容器名称与容器id一样，可以作为容器的唯一标识， 用起来更方便
+docker run --name eleme -d ubuntu /bin/sh -c "while true; do echo hello world ; sleep 1; done"  # 创建长期运行的容器, -d参数会使docker将容器放在后台运行
+docker start ubuntu2023  # 启动已经停止运行的容器
+docker logs eleme  # 获取容器的日志
+docker logs -f eleme  # 跟踪守护式容器的日志, 也会打印之前的，然后跟踪新生成的
+docker logs --tail 5 eleme  # 获取日志的最后5行内容
+docker logs --tail 0 -f eleme  # 不打印原有内容，只跟踪打印新生成的日志
+docker logs --tail 0 -tf eleme  # -t 打印时间戳
+docker restart ubuntu2023  # 重新启动容器
+docker attach ubuntu2023  # 附着到容器的会话上 容器重新启动后会运行一个交互式会话shell，可使用此命令附着到正在运行的容器,exit退出容器的shell，容器会再次停止运行
+docker top eleme  # 查看守护式容器内的进程
+docker stats eleme haohaoxuexi  # 查看多个守护式容器的统计信息
+docker exec -d haohaoxuexi touch /etc/new_config_file  # 在容器中运行后台任务
+docker exec -it haohaoxuexi /bin/bash  # 在容器内运行交互命令
+docker stop haohaoxuexi  # 停止正在运行的docker实例
+docker ps -n 3  # 显示最近的3个容器，不论是正在运行还是已停止
+docker kill eleme  # 快速停止某个容器
+docker run --restart=always --name tiantianxiangshang -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"  # 自动重启容器，不知道怎么测试效果
+docker inspect tiantianxiangshang  # 对容器进行详细检查，返回配置信息，包括名称，命令，网络配置等
+docker inspect -f='{{ .State.Running }}' tiantianxiangshang  # 返回容器的运行状态 -f 等价于--format, 支持完整的Go语言模板
+man docker-run  # docker的man页
+docker inspect -f='{{.Name}} {{ .State.Running }}' haohaoxuexi tiantianxiangshang  
+docker rm -f haohaoxuexi  # 删除容器，如果容器正在运行，则强制删除
+docker rm -f `docker ps  -a -q | tail -n 1`   # 批量删除多个容器
+docker images  # 列出docker镜像
+docker pull ubuntu:12.04  # 拉取指定版本的docker镜像
+docker run -it --name xiangfengerxing ubuntu:12.04 /bin/bash  # 使用冒号+标签名指定特定镜像
+docker images ubuntu   # 查看ubuntu相关的镜像都有哪些
+docker help  # 列出docker完整的命令列表
+docker search puppet  # 查找镜像
+docker login  # 登录docker hub账号
+docker logout # 登出docker hub账号
+docker ps -a  # 查看当前系统中容器的列表 不加-a就只展示正在运行的 -l 列出最近一次运行的容器
+hostname  # 容器的主机名就是该容器的id
+ip a  # 查看所有网卡的接口信息
+ip link list  # 显示网络设备的运行状态
+
+ps -aux  # 以BSD方式显示 a 显示所有用户的进程(show processes for all users) u 显示用户(display the process’s user/owner) x 显示无控制终端的进程(also show processes not attached to a terminal) 
+ps -ef  # ps -ef 是以System V方式显示，该种方式比BSD方式显示的多 e 显示所有用户的进程(all processes)此参数的效果和指定"a"参数相同 f 用ASCII字符显示树状结构，表达程序间的相互关系(ASCII art forest)
+
+apt-get update && apt-get install vim  # ubuntu安装软件
+apt-get -yqq update
+apt-get -y install apache2  # ubuntu安装apache2

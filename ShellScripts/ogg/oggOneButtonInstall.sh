@@ -1,5 +1,6 @@
 #!/bin/bash
 # 默认只安装ogg基础服务，指定-installCloud参数，表示需要安装ogg微服务
+# 修改用户名，密码，服务端口等配置，可改动脚本中设置的oggcloud.rsp的内容后再执行，搜索oggcloud.rsp跳转到改动位置
 
 
 # 创建用户组与oracle用户
